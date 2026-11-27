@@ -163,7 +163,11 @@
   /* ---------------- 3. 상태 ---------------- */
   const LS_KEY = 'ai-office-state-v1';
   const DB_KEY = 'ai-office-db-url';
-  const nowStamp = () => new Date().toISOString().slice(0, 16).replace('T', ' ');
+  const nowStamp = () => {
+    const d = new Date();
+    const p = n => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+  };
 
   function seedState() {
     const t = nowStamp();
