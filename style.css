@@ -556,6 +556,11 @@ main{max-width:1240px;margin:0 auto;padding:18px clamp(14px,3vw,28px) 40px}
   .footer{font-size:10px}
   .opinions{max-height:none}
 }
+@media (max-width:520px){
+  .brand-sub{display:none}
+  .brand-text h1{font-size:16px}
+  .brand-mark{font-size:22px}
+}
 @media (max-width:480px){
   .voter{flex-wrap:wrap}
   .v-btns{margin-left:0;width:100%;justify-content:flex-end}
