@@ -20,6 +20,14 @@ Roy · ChatGPT · Muse · Gemini 4인 전용 합동 비서실 웹앱.
 | `style.css` | 픽셀/도트 오피스 테마 |
 | `app.js` | 상태·스프라이트·투표·붙여넣기 파싱·DB 동기화 |
 
+## 배포 (GitHub Pages)
+
+저장소 **Settings → Pages → Source: Deploy from a branch → Branch `main` / 폴더 `/(root)` → Save** 후 1분 정도 기다리면 아래 주소로 공개됩니다.
+
+> https://twh2022.github.io/r0y/
+
+(GitHub 앱 권한으로 Pages를 자동 활성화할 수 없어 처음 한 번은 웹 화면에서 켜야 합니다.)
+
 ## 메모
 
 - 공개 저장소이므로 API 키·전화번호·계좌정보 등 민감한 값은 넣지 않습니다. DB URL을 쓸 경우에도 공개 규칙이면 누구나 읽을 수 있으니 개인정보는 넣지 마세요.
