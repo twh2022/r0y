@@ -548,6 +548,7 @@ main{max-width:1240px;margin:0 auto;padding:18px clamp(14px,3vw,28px) 40px}
   .wall{height:24%}
   .window{width:22%}
   .whiteboard{display:none}
+  .cooler{display:none}
   .office-head .pixel-mini{display:none}
   .nameplate{font-size:6px;padding:2px 4px}
   .bubble{max-width:150px;font-size:10.5px;bottom:calc(100% + 20px)}
