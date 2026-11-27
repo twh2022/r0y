@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>🏢 AI 합동 비서실 — Roy · ChatGPT · Muse · Gemini</title>
+<meta name="description" content="Roy · ChatGPT · Muse · Gemini 4인 전용 합동 비서실. 오피스 맵, 안건 회의실(찬성·기각·보류 투표), 프로젝트 스펙 보드.">
+<meta name="theme-color" content="#080a0f">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23080a0f'/%3E%3Crect x='3' y='2' width='10' height='3' fill='%237ee787'/%3E%3Crect x='10' y='5' width='3' height='3' fill='%237ee787'/%3E%3Crect x='3' y='8' width='10' height='3' fill='%237ee787'/%3E%3Crect x='3' y='11' width='3' height='3' fill='%237ee787'/%3E%3Crect x='3' y='14' width='10' height='2' fill='%237ee787'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="scanlines" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">🏢</span>
+    <div class="brand-text">
+      <h1>AI 합동 비서실</h1>
+      <p class="brand-sub">ROY · CHATGPT · MUSE · GEMINI</p>
+    </div>
+  </div>
+  <div class="topbar-actions">
+    <span id="syncBadge" class="sync-badge" data-state="local" title="저장 상태">
+      <span class="dot" aria-hidden="true"></span><span id="syncText">로컬 저장</span>
+    </span>
+    <button id="btnDb" class="btn ghost" type="button">⚙️ DB 연동</button>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="비서실 화면">
+  <button class="tab is-active" role="tab" aria-selected="true" aria-controls="panel-office" data-tab="office" type="button">🏢 오피스 맵</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="panel-meeting" data-tab="meeting" type="button">💬 회의실 <span class="tab-count" id="agendaCount">2</span></button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="panel-work" data-tab="work" type="button">🛠️ 작업실</button>
+</nav>
+
+<main>
+  <!-- ================= 오피스 맵 ================= -->
+  <section id="panel-office" class="panel is-active" role="tabpanel" aria-labelledby="tab-office">
+    <div class="office-wrap">
+      <div class="office-card">
+        <div class="office-head">
+          <h2 class="panel-title">오피스 맵</h2>
+          <p class="panel-hint">캐릭터를 <b>클릭</b>하면 상태가 바뀝니다 · <span class="pixel-mini">CLICK AN AGENT</span></p>
+        </div>
+
+        <div class="room" id="room" aria-label="비서실 평면도">
+          <div class="wall" aria-hidden="true">
+            <div class="window"><span></span><span></span><span></span></div>
+            <div class="whiteboard">
+              <span class="wb-title">TODAY</span>
+              <span class="wb-line" id="boardLine1">ALPHA SHIELD v3.2 · 현행 유지 검토</span>
+              <span class="wb-line" id="boardLine2">소액 코인 봇 · 예산/거래소 대기</span>
+            </div>
+            <div class="clock" id="officeClock">--:--</div>
+          </div>
+
+          <div class="floor" aria-hidden="true"></div>
+
+          <div class="prop plant" style="--x:6%;--y:96%" aria-hidden="true"><span class="leaf"></span><span class="leaf l2"></span><span class="pot"></span></div>
+          <div class="prop cooler" style="--x:93%;--y:34%" aria-hidden="true"><span class="bottle"></span><span class="stand"></span></div>
+          <div class="prop sofa" style="--x:74%;--y:95%" aria-hidden="true"><span></span></div>
+
+          <div class="desk" style="--x:20%;--y:56%" aria-hidden="true"><span class="mon"></span><span class="mon m2"></span></div>
+          <div class="desk" style="--x:64%;--y:52%" aria-hidden="true"><span class="mon"></span><span class="mon m2"></span></div>
+          <div class="desk" style="--x:38%;--y:88%" aria-hidden="true"><span class="mon"></span><span class="mon m2"></span></div>
+          <div class="desk" style="--x:82%;--y:80%" aria-hidden="true"><span class="mon"></span><span class="mon m2"></span></div>
+
+          <div class="agent" data-agent="Roy" tabindex="0" role="button" aria-label="Roy 상태 보기" style="--x:20%;--y:63%">
+            <div class="bubble" hidden></div>
+            <div class="sprite-box"><canvas class="sprite" width="16" height="16"></canvas></div>
+            <span class="nameplate">Roy</span>
+          </div>
+          <div class="agent" data-agent="ChatGPT" tabindex="0" role="button" aria-label="ChatGPT 상태 보기" style="--x:64%;--y:59%">
+            <div class="bubble" hidden></div>
+            <div class="sprite-box"><canvas class="sprite" width="16" height="16"></canvas></div>
+            <span class="nameplate">ChatGPT</span>
+          </div>
+          <div class="agent" data-agent="Muse" tabindex="0" role="button" aria-label="Muse 상태 보기" style="--x:38%;--y:95%">
+            <div class="bubble" hidden></div>
+            <div class="sprite-box"><canvas class="sprite" width="16" height="16"></canvas></div>
+            <span class="nameplate">Muse</span>
+          </div>
+          <div class="agent" data-agent="Gemini" tabindex="0" role="button" aria-label="Gemini 상태 보기" style="--x:82%;--y:87%">
+            <div class="bubble" hidden></div>
+            <div class="sprite-box"><canvas class="sprite" width="16" height="16"></canvas></div>
+            <span class="nameplate">Gemini</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="agent-panel" id="agentPanel" aria-live="polite">
+        <div class="agent-panel-head">
+          <canvas class="sprite big" id="panelSprite" width="16" height="16" aria-hidden="true"></canvas>
+          <div>
+            <h3 id="panelName">Roy</h3>
+            <p id="panelRole">외부 팩트 · 리스크 · 브리핑</p>
+          </div>
+        </div>
+        <div class="status-row">
+          <span class="status-label">현재 상태</span>
+          <span class="status-pill" id="panelStatus" data-status="대기 중">대기 중</span>
+        </div>
+        <div class="status-buttons" id="statusButtons">
+          <button class="chip" data-status="대기 중" type="button">대기 중</button>
+          <button class="chip" data-status="검토 중" type="button">검토 중</button>
+          <button class="chip" data-status="발언 완료" type="button">발언 완료</button>
+        </div>
+        <div class="recent">
+          <span class="status-label">최근 발언 요약</span>
+          <p id="panelRecent">—</p>
+        </div>
+        <div class="agent-stats">
+          <div><span id="statOpinions">0</span><small>의견</small></div>
+          <div><span id="statVotes">0</span><small>투표</small></div>
+          <div><span id="statAgenda">0</span><small>참여 안건</small></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ================= 회의실 ================= -->
+  <section id="panel-meeting" class="panel" role="tabpanel" aria-labelledby="tab-meeting" hidden>
+    <div class="meeting-grid">
+      <aside class="agenda-col">
+        <div class="col-head">
+          <h2 class="panel-title">안건</h2>
+          <button class="btn small" id="btnNewAgenda" type="button">+ 새 안건</button>
+        </div>
+        <ul class="agenda-list" id="agendaList"></ul>
+        <div class="col-foot">
+          <p class="tiny muted">투표는 4인 각 1표 · 언제든 변경 가능</p>
+        </div>
+      </aside>
+
+      <section class="detail-col" id="agendaDetail" aria-live="polite"></section>
+
+      <section class="paste-col">
+        <div class="col-head">
+          <h2 class="panel-title">📋 붙여넣기 정리</h2>
+        </div>
+        <p class="tiny muted">슬랙·채팅 로그를 그대로 붙이면 <code>[Roy]</code> <code>[ChatGPT]</code> <code>[Muse]</code> <code>[Gemini]</code> 말머리별로 나눠 현재 안건에 의견으로 넣습니다.</p>
+        <textarea id="pasteBox" class="ta" rows="7" placeholder="[Roy] 검토 의견...&#10;[Muse] 리서치 결과...&#10;[ChatGPT] 구조 검토..."></textarea>
+        <div class="paste-actions">
+          <button class="btn small" id="btnParse" type="button">미리보기</button>
+          <button class="btn small primary" id="btnApplyPaste" type="button" disabled>안건에 추가</button>
+        </div>
+        <div class="parse-preview" id="parsePreview"></div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ================= 작업실 ================= -->
+  <section id="panel-work" class="panel" role="tabpanel" aria-labelledby="tab-work" hidden>
+    <div class="work-grid">
+      <article class="card spec">
+        <header class="card-head">
+          <div>
+            <h2 class="panel-title">ALPHA SHIELD v3.2</h2>
+            <p class="card-sub">미국장 자동매매 전략 스펙 · 6-1-F 현행 체제</p>
+          </div>
+          <span class="badge live">현행 유지</span>
+        </header>
+
+        <div class="numbers">
+          <div class="num"><b>8</b><small>종목 유니버스</small></div>
+          <div class="num"><b>2</b><small>슬롯 고정</small></div>
+          <div class="num"><b>5</b><small>중 방어막</small></div>
+        </div>
+
+        <div class="ticker-chips" id="tickerChips">
+          <span>NVDA</span><span>TSLA</span><span>AMZN</span><span>TSM</span><span>AVGO</span><span>QQQ</span><span>AAPL</span><span>GOOGL</span>
+        </div>
+
+        <ul class="rules">
+          <li><b>진입</b> — Hark ATR 정규화 눌림 + RSI(2) ≤ 15, 200일선 아래 20% 이탈 시 제외</li>
+          <li><b>물타기</b> — 평단 −1.5% 이상 추가 하락 시 1회, 종목당 노출 상한 내</li>
+          <li><b>익절</b> — VIX 가변 목표 (VIX &lt; 18 → +8% / VIX ≥ 18 → +5%)</li>
+          <li><b>손절</b> — 단일 진입 −5%, 물타기 포지션 −3.5%</li>
+          <li><b>시간청산</b> — 최초 진입일 기준 10거래일 경과</li>
+          <li><b>방어막</b> — NQ −1.5% / VIX ≥ 30 신규 매수 차단, 개장·마감 15분 유예, 실적·8-K 이벤트 가드</li>
+          <li><b>Fail-closed</b> — 시세 지연·SMA200 미확인 시 매수만 차단, 매도는 정상</li>
+        </ul>
+
+        <footer class="card-foot">
+          <span class="stat">2년 백테스트 <b>+48.68%</b> <span class="muted">(비용 0.10%)</span></span>
+          <span class="stat">MDD <b>−10.18%</b></span>
+          <span class="stat">샤프 <b>2.05</b></span>
+          <span class="stat">승률 <b>59.4%</b> <span class="muted">(126포지션)</span></span>
+        </footer>
+        <p class="disclaimer">스펙 문서에 적힌 수치 그대로 · 검증 결과는 별도 안건에서 논의</p>
+      </article>
+
+      <article class="card project">
+        <header class="card-head">
+          <div>
+            <h2 class="panel-title">소액 코인 매매 봇</h2>
+            <p class="card-sub">현물 · 저빈도 · 방어막 우선</p>
+          </div>
+          <span class="badge wait">결정 대기</span>
+        </header>
+
+        <ol class="steps" id="botSteps">
+          <li data-step="0" class="done"><span class="dot"></span><span class="step-t">안건 상정</span></li>
+          <li data-step="1" class="done"><span class="dot"></span><span class="step-t">4인 검토 · 투표</span></li>
+          <li data-step="2" class="current"><span class="dot"></span><span class="step-t">예산 · 거래소 확정</span></li>
+          <li data-step="3"><span class="dot"></span><span class="step-t">모의 2주 드라이런</span></li>
+          <li data-step="4"><span class="dot"></span><span class="step-t">최소 금액 실전</span></li>
+        </ol>
+
+        <ul class="rules compact">
+          <li><b>거래소</b> — 국내 원화마켓(업비트) 1순위, 최소 주문 5,000원</li>
+          <li><b>대상</b> — BTC · ETH · SOL 등 메이저 2~3종</li>
+          <li><b>금지</b> — 선물 · 레버리지 · 마틴게일 · 그리드</li>
+          <li><b>필수</b> — API 키 출금 권한 OFF, 일 최대 손실 한도, 중복 주문 방지</li>
+          <li><b>검증</b> — 왕복 0.2~0.3% 비용 가정에도 성과 유지되는지 확인</li>
+        </ul>
+
+        <div class="pending-box">
+          <span class="pending-label">대기 항목</span>
+          <ul>
+            <li>계좌 예산 규모</li>
+            <li>거래소 선택 (업비트 / 해외)</li>
+            <li>드라이런 시작일</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card ops">
+        <header class="card-head">
+          <div>
+            <h2 class="panel-title">운영 규칙</h2>
+            <p class="card-sub">4인 릴레이 회의 방식</p>
+          </div>
+        </header>
+        <ul class="rules compact">
+          <li>각 AI는 <code>[Roy]</code> <code>[ChatGPT]</code> <code>[Muse]</code> <code>[Gemini]</code> 말머리로 발언</li>
+          <li>슬랙 <code>#ai-회의실-전체</code>에서 논의, 이 보드는 요약·집계용</li>
+          <li>안건마다 찬성 / 기각 / 보류 1표, 변경 가능</li>
+          <li>스펙 변경은 백테스트 · 전수 감사 통과 후에만</li>
+        </ul>
+        <div class="ops-actions">
+          <button class="btn small ghost" id="btnExport" type="button">데이터 내보내기</button>
+          <button class="btn small ghost danger" id="btnReset" type="button">초기화</button>
+        </div>
+        <p class="tiny muted" id="storageLine">저장 위치: 이 브라우저 (localStorage)</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>AI 합동 비서실 · Roy / ChatGPT / Muse / Gemini</span>
+  <span class="muted">모든 데이터는 브라우저에 저장됩니다 · DB 연동 시에만 클라우드로 전송</span>
+</footer>
+
+<!-- ================= DB 모달 ================= -->
+<div class="modal" id="dbModal" hidden>
+  <div class="modal-backdrop" data-close="1"></div>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="dbTitle">
+    <header class="modal-head">
+      <h2 id="dbTitle">⚙️ DB 연동 (Firebase Realtime Database)</h2>
+      <button class="icon-btn" data-close="1" aria-label="닫기" type="button">✕</button>
+    </header>
+    <div class="modal-body">
+      <p class="tiny muted">지금은 이 브라우저에만 저장됩니다. 아래에 Firebase Realtime Database URL을 넣으면 안건·의견·투표가 실시간으로 클라우드에 동기화됩니다. (가입 없이 바로 사용 가능)</p>
+      <label class="field">
+        <span>Database URL</span>
+        <input id="dbUrlInput" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://your-project-default-rtdb.firebaseio.com">
+      </label>
+      <div class="db-actions">
+        <button class="btn primary small" id="btnDbSave" type="button">연결</button>
+        <button class="btn small" id="btnDbTest" type="button">연결 테스트</button>
+        <button class="btn small ghost danger" id="btnDbClear" type="button">해제</button>
+      </div>
+      <p class="db-status" id="dbStatus" data-state="idle">연결되지 않음 · 로컬 저장 모드</p>
+      <details class="db-help">
+        <summary>Firebase 설정 3단계</summary>
+        <ol>
+          <li>console.firebase.google.com → 프로젝트 만들기</li>
+          <li>Realtime Database → 데이터베이스 만들기 (테스트 모드)</li>
+          <li>표시되는 URL(<code>https://…-default-rtdb.firebaseio.com</code>)을 위 칸에 붙여넣기</li>
+        </ol>
+        <p class="tiny">※ 테스트 모드 규칙은 누구나 읽고 쓸 수 있습니다. 개인정보·키는 넣지 마세요.</p>
+      </details>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
