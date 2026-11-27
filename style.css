@@ -530,7 +530,8 @@ main{max-width:1240px;margin:0 auto;padding:18px clamp(14px,3vw,28px) 40px}
 @media (max-width:900px){
   .office-wrap{grid-template-columns:minmax(0,1fr)}
   .agent-panel{position:static}
-  .meeting-grid{grid-template-columns:1fr}
+  .meeting-grid{grid-template-columns:minmax(0,1fr)}
+  .agenda-col,.detail-col,.paste-col,.office-card,.agent-panel{min-width:0}
   .agenda-list{flex-direction:row;overflow-x:auto;padding-bottom:4px}
   .agenda-item{min-width:210px}
 }
